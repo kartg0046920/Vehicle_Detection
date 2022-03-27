@@ -215,10 +215,18 @@ def direction_setting():
         return driving_direction
 
 
-while (True):
+while True:
     ret, frame = cap.read()
     if ret is False:
         break
+
+    # 車速辨識範圍
+    """
+    cv2.line(frame, (425, 350), (840, 350), (255, 255, 255), 2)
+    cv2.line(frame, (5, 610), (1245, 610), (255, 255, 255), 2)
+    cv2.line(frame, (425, 350), (5, 610), (255, 255, 255), 2)
+    cv2.line(frame, (840, 350), (1245, 610), (255, 255, 255), 2)
+    """
 
     # 俯視座標轉換
     for i in transform_data:
@@ -236,7 +244,7 @@ while (True):
     src_list = np.float32(src)
     dst_list = np.float32(dst)
     M = cv2.getPerspectiveTransform(src_list, dst_list)
-    warped_frame = cv2.warpPerspective(roi, M, (transform_width, transform_height))
+    warped_frame = cv2.warpPerspective(frame, M, (transform_width, transform_height))
     warped_background = cv2.warpPerspective(background, M, (transform_width, transform_height))
 
 
@@ -292,7 +300,6 @@ while (True):
         _, thresh = cv2.threshold(diff_roi, 20, 255, cv2.THRESH_BINARY)
         dilation = cv2.dilate(thresh, np.ones((3, 3), np.uint8), iterations=1)
         contours, _ = cv2.findContours(dilation, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        cv2.imshow("dilation", dilation)
 
         # 車輛偵測
         detections = []

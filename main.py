@@ -397,19 +397,19 @@ while True:
     if config["save_video"]:
         writer.write(frame)
 
-    # 按下鍵盤 S 或 s ，出現 "Data Saved successfully" ，儲存偵測區域資料
+    # 按下鍵盤 S 或 s 出現 "Data Saved successfully" ，儲存偵測區域資料
     if cv2.waitKey(1) == ord('S') or cv2.waitKey(1) == ord('s'):
         with open(yaml_file, 'w+') as output_data:
             yaml.safe_dump(data, output_data, allow_unicode=None, default_flow_style=None, sort_keys=None)
             print("Data Saved successfully")
 
-    # 按下鍵盤 T 或 t ，出現 "Transform Data Saved successfully" ，儲存俯視座標轉換資料
+    # 按下鍵盤 T 或 t 出現 "Transform Data Saved successfully" ，儲存俯視座標轉換資料
     if cv2.waitKey(1) == ord('T') or cv2.waitKey(1) == ord('t'):
         with open(transform_yaml_file, 'w+') as output_transform_data:
             yaml.safe_dump(transform_data, output_transform_data, allow_unicode=None, default_flow_style=None, sort_keys=None)
             print("Transform Data Saved successfully")
 
-    # 按下鍵盤 Esc，關閉影片
+    # 按下鍵盤 Esc 關閉影片
     if cv2.waitKey(1) == 27:
         break
 
